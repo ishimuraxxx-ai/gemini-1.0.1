@@ -1,0 +1,16 @@
+/* Лишнее в «Режиме ИИ»: строка вкладок «Режим ИИ / Все / Картинки / Видео / Новости / Ещё»,
+   колонка статей-источников справа от ответа, кнопка «Приложения Google» и кнопки «+» и микрофона Google в поле ввода (диктовка — Ctrl+Пробел через расширение). */
+[role="navigation"]:has(a[href*="udm=2"]),
+.ofHStc.qmNpEc, .ub891,
+a.gb_C[href*="/about/products"],
+.uMMzHc.hhGtFb, .uMMzHc.vpw7Fc,
+[aria-label="Микрофон"], [aria-label="Microphone"], [aria-label="Голосовой поиск"], [aria-label="Search by voice"],
+[aria-label="Добавить файлы и инструменты"], [aria-label="Add files and tools"] {
+  display: none !important;
+}
+
+/* Логотип «G» остаётся, но никуда не ведёт */
+a[href*="/webhp"] {
+  pointer-events: none !important;
+  cursor: default !important;
+}

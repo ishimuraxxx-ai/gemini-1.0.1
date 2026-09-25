@@ -1,0 +1,110 @@
+# Публичная сборка Gemini.exe из исходников репозитория.
+# Запускается, когда появляется тег вида v1.0.1: при пуше тега (например, из GitHub Desktop)
+# или при публикации релиза на сайте GitHub (Releases → Draft a new release).
+# Выкладывает в релиз Gemini.exe, Gemini-portable.zip (готовая папка приложения)
+# и SHA256SUMS.txt. Для файлов создаётся аттестация происхождения:
+#   gh attestation verify Gemini.exe -R <владелец>/<репозиторий>
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: write      # создать релиз / приложить файлы
+  id-token: write      # аттестация
+  attestations: write
+
+# Публикация релиза на сайте создаёт и тег, и событие release: запуски для одного тега идут по очереди.
+concurrency:
+  group: release-${{ github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Skip if this release is already built
+        id: check
+        if: startsWith(github.ref, 'refs/tags/')
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $assets = gh release view "${{ github.ref_name }}" --json assets -q '.assets[].name' 2>$null
+          $built = ($LASTEXITCODE -eq 0) -and ($assets -contains 'Gemini.exe')
+          "built=$($built.ToString().ToLower())" >> $env:GITHUB_OUTPUT
+          if ($built) { Write-Host 'Release already has Gemini.exe, nothing to do.' }
+          exit 0
+
+      - name: Build Gemini.exe
+        if: steps.check.outputs.built != 'true'
+        shell: pwsh
+        run: ./build.ps1
+
+      - name: Package portable zip
+        if: steps.check.outputs.built != 'true'
+        shell: pwsh
+        run: |
+          $pkg = 'dist/Gemini'
+          New-Item -ItemType Directory -Force $pkg | Out-Null
+          Copy-Item Gemini.exe, install.cmd, install.ps1, uninstall.cmd, uninstall.ps1, build.ps1, README.md, README.ru.md, LICENSE $pkg
+          Copy-Item -Recurse extension, launcher $pkg
+          Compress-Archive -Path $pkg -DestinationPath dist/Gemini-portable.zip
+          Copy-Item Gemini.exe dist/
+          Get-FileHash dist/Gemini.exe, dist/Gemini-portable.zip -Algorithm SHA256 |
+            ForEach-Object { '{0}  {1}' -f $_.Hash.ToLower(), (Split-Path $_.Path -Leaf) } |
+            Set-Content dist/SHA256SUMS.txt -Encoding ascii
+          Get-Content dist/SHA256SUMS.txt
+
+      - name: Attest build provenance
+        if: steps.check.outputs.built != 'true'
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: |
+            dist/Gemini.exe
+            dist/Gemini-portable.zip
+
+      - name: Publish release
+        if: startsWith(github.ref, 'refs/tags/') && steps.check.outputs.built != 'true'
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $tag = '${{ github.ref_name }}'
+          $build = @"
+          **Download:** ``Gemini-portable.zip`` → unzip → run ``Gemini.exe`` → the **Gemini** shortcut appears on your Desktop.
+          **Скачать:** ``Gemini-portable.zip`` → распаковать → запустить ``Gemini.exe`` → ярлык **Gemini** появится на рабочем столе.
+
+          Built by GitHub Actions from commit ${{ github.sha }}.
+          Build log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+          **SHA-256:**
+          ``````
+          $(Get-Content dist/SHA256SUMS.txt -Raw)
+          ``````
+          Verify: ``gh attestation verify Gemini.exe -R ${{ github.repository }}``
+          "@
+          $files = 'dist/Gemini.exe', 'dist/Gemini-portable.zip', 'dist/SHA256SUMS.txt'
+
+          gh release view $tag *> $null
+          if ($LASTEXITCODE -eq 0) {
+            # релиз уже создан на сайте: прикладываем файлы и дописываем описание сборки
+            gh release upload $tag @files --clobber
+            $body = (gh release view $tag --json body -q .body) -join "`n"
+            gh release edit $tag --notes (($body.Trim() + "`n`n" + $build).Trim())
+          } else {
+            gh release create $tag @files --title "Gemini for Windows $tag" --notes $build
+          }
+
+      - name: Upload build (manual run)
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: Gemini
+          path: dist/*

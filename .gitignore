@@ -1,0 +1,9 @@
+# вход в аккаунт Google (cookies, токены) — никогда не публиковать
+profile/
+
+# собирается build.ps1
+Gemini.exe
+launcher/gemini.ico
+
+# ярлык с абсолютным путём — создаётся install.cmd на каждом компьютере
+Gemini.lnk
