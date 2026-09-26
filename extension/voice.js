@@ -34,9 +34,26 @@
   }
   if (applyAppLocale()) return;
 
-  // Заголовок окна — «G» вместо «… - Поиск в Google» (Google меняет его после каждого вопроса).
-  const TITLE = 'G';
-  const keepTitle = () => { if (document.title !== TITLE) document.title = TITLE; };
+  // Заголовок окна — «Gemini» вместо «… - Поиск в Google» (Google меняет его после каждого вопроса),
+  // значок окна и панели задач — Gemini вместо «G» Google.
+  // Значок вставляется как data: URL: так Edge точно покажет его как значок страницы.
+  const TITLE = 'Gemini';
+  let icon = null;
+  fetch(chrome.runtime.getURL('gemini.png')).then((r) => r.blob()).then((b) => {
+    const fr = new FileReader();
+    fr.onload = () => { icon = fr.result; keepTitle(); };
+    fr.readAsDataURL(b);
+  }).catch(() => {});
+  const keepTitle = () => {
+    if (document.title !== TITLE) document.title = TITLE;
+    if (!icon || !document.head) return;
+    const links = document.head.querySelectorAll('link[rel~="icon"]');
+    if (links.length === 1 && links[0].href === icon) return;
+    links.forEach((l) => l.remove());
+    const l = document.createElement('link');
+    l.rel = 'icon'; l.type = 'image/png'; l.href = icon;
+    document.head.appendChild(l);
+  };
   keepTitle();
   new MutationObserver(keepTitle).observe(document.head || document.documentElement, { childList: true, subtree: true, characterData: true });
 

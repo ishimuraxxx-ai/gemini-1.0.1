@@ -9,8 +9,14 @@ a.gb_C[href*="/about/products"],
   display: none !important;
 }
 
-/* Логотип «G» остаётся, но никуда не ведёт */
+/* Логотип слева вверху: вместо «G» Google — значок Gemini, и никуда не ведёт */
 a[href*="/webhp"] {
   pointer-events: none !important;
   cursor: default !important;
+}
+a[href*="/webhp"] svg {
+  background: url("chrome-extension://__MSG_@@extension_id__/gemini.png") center / contain no-repeat !important;
+}
+a[href*="/webhp"] svg > * {
+  display: none !important;
 }

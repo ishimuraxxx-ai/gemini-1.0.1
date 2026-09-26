@@ -79,7 +79,7 @@ msedge.exe --user-data-dir="<folder>\profile"
 
 The separate profile makes the window its own process, so the extension loads even when your regular Edge is already open.
 
-The extension hides the search tabs, the sources column and extra buttons ([`hide.css`](extension/hide.css)), centers the chat, keeps the window title short and adds voice input ([`voice.js`](extension/voice.js)).
+The extension hides the search tabs, the sources column and extra buttons ([`hide.css`](extension/hide.css)), centers the chat, names the window "Gemini" with the Gemini icon instead of Google's "G" and adds voice input ([`voice.js`](extension/voice.js)).
 
 ```
 %LOCALAPPDATA%\Programs\Gemini\
