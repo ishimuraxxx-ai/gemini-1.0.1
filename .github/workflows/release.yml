@@ -1,8 +1,8 @@
 # Публичная сборка Gemini.exe из исходников репозитория.
 # Запускается, когда появляется тег вида v1.0.1: при пуше тега (например, из GitHub Desktop)
 # или при публикации релиза на сайте GitHub (Releases → Draft a new release).
-# Выкладывает в релиз Gemini.exe, Gemini-portable.zip (готовая папка приложения)
-# и SHA256SUMS.txt. Для файлов создаётся аттестация происхождения:
+# Выкладывает в релиз Gemini.exe (одним файлом, расширение вшито внутрь) и SHA256SUMS.txt.
+# Для exe создаётся аттестация происхождения:
 #   gh attestation verify Gemini.exe -R <владелец>/<репозиторий>
 name: Release
 
@@ -47,17 +47,13 @@ jobs:
         shell: pwsh
         run: ./build.ps1
 
-      - name: Package portable zip
+      - name: Checksums
         if: steps.check.outputs.built != 'true'
         shell: pwsh
         run: |
-          $pkg = 'dist/Gemini'
-          New-Item -ItemType Directory -Force $pkg | Out-Null
-          Copy-Item Gemini.exe, install.cmd, install.ps1, uninstall.cmd, uninstall.ps1, build.ps1, README.md, README.ru.md, LICENSE $pkg
-          Copy-Item -Recurse extension, launcher $pkg
-          Compress-Archive -Path $pkg -DestinationPath dist/Gemini-portable.zip
+          New-Item -ItemType Directory -Force dist | Out-Null
           Copy-Item Gemini.exe dist/
-          Get-FileHash dist/Gemini.exe, dist/Gemini-portable.zip -Algorithm SHA256 |
+          Get-FileHash dist/Gemini.exe -Algorithm SHA256 |
             ForEach-Object { '{0}  {1}' -f $_.Hash.ToLower(), (Split-Path $_.Path -Leaf) } |
             Set-Content dist/SHA256SUMS.txt -Encoding ascii
           Get-Content dist/SHA256SUMS.txt
@@ -66,9 +62,7 @@ jobs:
         if: steps.check.outputs.built != 'true'
         uses: actions/attest-build-provenance@v2
         with:
-          subject-path: |
-            dist/Gemini.exe
-            dist/Gemini-portable.zip
+          subject-path: dist/Gemini.exe
 
       - name: Publish release
         if: startsWith(github.ref, 'refs/tags/') && steps.check.outputs.built != 'true'
@@ -78,8 +72,8 @@ jobs:
         run: |
           $tag = '${{ github.ref_name }}'
           $build = @"
-          **Download:** ``Gemini-portable.zip`` → unzip → run ``Gemini.exe`` → the **Gemini** shortcut appears on your Desktop.
-          **Скачать:** ``Gemini-portable.zip`` → распаковать → запустить ``Gemini.exe`` → ярлык **Gemini** появится на рабочем столе.
+          **Download:** ``Gemini.exe`` (one file) → run it → the **Gemini** shortcut appears on your Desktop and in the Start menu.
+          **Скачать:** ``Gemini.exe`` (один файл) → запустить → ярлык **Gemini** появится на рабочем столе и в меню «Пуск».
 
           Built by GitHub Actions from commit ${{ github.sha }}.
           Build log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
@@ -90,7 +84,7 @@ jobs:
           ``````
           Verify: ``gh attestation verify Gemini.exe -R ${{ github.repository }}``
           "@
-          $files = 'dist/Gemini.exe', 'dist/Gemini-portable.zip', 'dist/SHA256SUMS.txt'
+          $files = 'dist/Gemini.exe', 'dist/SHA256SUMS.txt'
 
           gh release view $tag *> $null
           if ($LASTEXITCODE -eq 0) {

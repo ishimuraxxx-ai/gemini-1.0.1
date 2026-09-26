@@ -11,7 +11,7 @@ Google AI Mode in its own clean window. Open source, for Windows 10 and 11.
 [![Windows 10 | 11](https://img.shields.io/badge/Windows-10%20%7C%2011-4c8df6?style=flat-square)](#requirements)
 [![License: MIT](https://img.shields.io/github/license/ishimuraxxx-ai/gemini-1.0.1?style=flat-square&color=4c8df6)](LICENSE)
 
-<a href="../../releases/latest"><img src="https://img.shields.io/badge/%E2%AC%87%20Download%20for%20Windows-4c8df6?style=for-the-badge" alt="Download for Windows" height="44"></a>
+<a href="https://github.com/ishimuraxxx-ai/gemini-1.0.1/releases/latest/download/Gemini.exe"><img src="https://img.shields.io/badge/%E2%AC%87%20Download%20for%20Windows-4c8df6?style=for-the-badge" alt="Download for Windows" height="44"></a>
 
 **English** · [Русский](README.ru.md) · [Website](https://ishimuraxxx-ai.github.io/gemini-1.0.1/)
 
@@ -21,9 +21,10 @@ Google AI Mode in its own clean window. Open source, for Windows 10 and 11.
 
 ## Install
 
-1. Download **`Gemini-portable.zip`** from [Releases](../../releases/latest).
-2. Unzip it to a permanent place, for example `C:\Gemini`.
-3. Run **`Gemini.exe`**. A **Gemini** shortcut appears on your Desktop.
+1. Download **[`Gemini.exe`](https://github.com/ishimuraxxx-ai/gemini-1.0.1/releases/latest/download/Gemini.exe)**: one file, nothing to unzip.
+2. Run it. AI Mode opens, and a **Gemini** shortcut appears on your Desktop and in the Start menu.
+
+The downloaded file can be deleted afterwards: the app copies itself to `%LOCALAPPDATA%\Programs\Gemini`.
 
 Ask anything. Sign in to Google if you want to keep your chat history.
 
@@ -38,7 +39,7 @@ Ask anything. Sign in to Google if you want to keep your chat history.
 | ✂️ **Nothing extra** | No Images / Videos / News tabs, no sources column, no extra buttons. Just the answer, centered. |
 | 🎤 **Voice input with commands** | Dictate with **Ctrl+Space** in 50+ languages. Say **"send"** at the end and the question goes out. |
 | 🌐 **Interface language** | Switch AI Mode's language in settings (**Ctrl+,**), independent of your Google Account. |
-| 📁 **One portable folder** | The app, settings and your login live in one folder. Your regular browser isn't touched. |
+| 📦 **One file** | Download a single `Gemini.exe`, no installer or zip. The app, settings and your login live in one folder; your regular browser isn't touched. |
 | 🔍 **Transparent builds** | The exe is built by GitHub Actions from this code, with checksums and a provenance attestation. |
 
 ## Requirements
@@ -49,7 +50,7 @@ Ask anything. Sign in to Google if you want to keep your chat history.
 
 ## What it opens
 
-[Google AI Mode](https://www.google.com/search?udm=50) is the AI chat in Google Search, powered by Gemini. This app is that official page, Microsoft Edge and about 70 lines of code you can read in full, plus a small extension that tidies the page up.
+[Google AI Mode](https://www.google.com/search?udm=50) is the AI chat in Google Search, powered by Gemini. This app is that official page, Microsoft Edge and about 120 lines of code you can read in full, plus a small extension that tidies the page up.
 
 ## Transparency
 
@@ -67,7 +68,7 @@ Ask anything. Sign in to Google if you want to keep your chat history.
 
 <br>
 
-`Gemini.exe` starts Microsoft Edge in app mode with its own profile and a small extension, and keeps a `Gemini.lnk` shortcut next to itself and on the Desktop:
+`Gemini.exe` starts Microsoft Edge in app mode with its own profile and a small extension. The extension is embedded in the exe: on launch the downloaded exe copies itself to `%LOCALAPPDATA%\Programs\Gemini`, unpacks the extension there and keeps Gemini shortcuts on the Desktop and in the Start menu:
 
 ```
 msedge.exe --user-data-dir="<folder>\profile"
@@ -81,8 +82,17 @@ The separate profile makes the window its own process, so the extension loads ev
 The extension hides the search tabs, the sources column and extra buttons ([`hide.css`](extension/hide.css)), centers the chat, keeps the window title short and adds voice input ([`voice.js`](extension/voice.js)).
 
 ```
-Gemini/
+%LOCALAPPDATA%\Programs\Gemini\
 ├── Gemini.exe        ← the app
+├── extension/        ← clean-up, settings and voice input (unpacked from the exe)
+└── profile/          ← your Google login (created on first run)
+```
+
+If `Gemini.exe` has an `extension/` folder next to it (a copy of this repository), it runs right there instead and doesn't copy anything:
+
+```
+Gemini/
+├── Gemini.exe        ← the app (built by build.ps1)
 ├── Gemini.lnk        ← shortcut (Gemini.exe also puts one on the Desktop)
 ├── extension/        ← clean-up, settings and voice input (Edge extension)
 ├── launcher/         ← source of Gemini.exe
@@ -125,7 +135,7 @@ Speech is recognized by Edge's built-in Web Speech API (a Microsoft cloud servic
 
 Rebuild manually: `powershell -ExecutionPolicy Bypass -File build.ps1`
 
-**New release (for the author):** `git tag v1.0.2` and `git push origin v1.0.2`. GitHub Actions builds and publishes `Gemini.exe`, `Gemini-portable.zip` and `SHA256SUMS.txt`.
+**New release (for the author):** `git tag v1.0.3` and `git push origin v1.0.3`. GitHub Actions builds and publishes `Gemini.exe` and `SHA256SUMS.txt`.
 
 </details>
 
@@ -147,7 +157,9 @@ Rebuild manually: `powershell -ExecutionPolicy Bypass -File build.ps1`
 
 <br>
 
-Run `uninstall.cmd` to remove the shortcuts, then delete the folder.
+Close Gemini, delete the folder `%LOCALAPPDATA%\Programs\Gemini` (paste this into the Explorer address bar) and the Gemini shortcuts on the Desktop and in the Start menu.
+
+A copy of the repository: run `uninstall.cmd` to remove the shortcuts, then delete the folder.
 
 </details>
 
@@ -162,7 +174,7 @@ Google AI Mode (<code>google.com/search?udm=50</code>), the AI chat in Google Se
 <details>
 <summary><b>How do I install it on Windows 10 or 11?</b></summary>
 <br>
-Download <code>Gemini-portable.zip</code> from Releases, unzip it and run <code>Gemini.exe</code>. A Gemini shortcut appears on your Desktop.
+Download <code>Gemini.exe</code> from Releases (one file) and run it. A Gemini shortcut appears on your Desktop and in the Start menu.
 </details>
 
 <details>

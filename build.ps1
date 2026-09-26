@@ -37,6 +37,8 @@ if (-not (Test-Path $icon)) {
 
 $cscArgs = @('/nologo', '/target:winexe', '/optimize+', '/codepage:65001', "/out:$exe", '/r:System.Windows.Forms.dll')
 if (Test-Path $icon) { $cscArgs += "/win32icon:$icon" }
+# Расширение вшивается в exe, чтобы программа скачивалась одним файлом
+Get-ChildItem (Join-Path $root 'extension') -File | ForEach-Object { $cscArgs += "/resource:$($_.FullName),extension/$($_.Name)" }
 $cscArgs += (Join-Path $root 'launcher\Gemini.cs')
 & $csc @cscArgs
 if ($LASTEXITCODE -ne 0) { throw 'Сборка Gemini.exe не удалась.' }

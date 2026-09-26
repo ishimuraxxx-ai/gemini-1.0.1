@@ -1,24 +1,29 @@
 ﻿// Запускает «Режим ИИ» Google Поиска (Gemini) в отдельном окне Microsoft Edge.
-// Профиль (вход в аккаунт) и расширение берутся из папки рядом с Gemini.exe.
-// При каждом запуске рядом с exe и на рабочем столе создаётся ярлык Gemini.lnk (если его нет или он ведёт не сюда).
+// Расширение (extension\) вшито в Gemini.exe, поэтому для установки достаточно одного файла:
+// скачанный exe копирует себя в %LOCALAPPDATA%\Programs\Gemini, распаковывает туда расширение
+// и кладёт ярлыки Gemini на рабочий стол и в меню «Пуск».
+// Если рядом с exe уже есть папка extension\ (папка из git), всё берётся из неё, как раньше.
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 [assembly: AssemblyTitle("Gemini")]
 [assembly: AssemblyProduct("Gemini Voice Desktop")]
-[assembly: AssemblyVersion("1.0.1.0")]
+[assembly: AssemblyVersion("1.0.2.0")]
 
 static class Launcher
 {
     const string Url = "https://www.google.com/search?udm=50"; // «Режим ИИ» Google Поиска (Gemini)
 
+    [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]
+    static extern bool DeleteFile(string path);
+
     [STAThread]
     static void Main()
     {
-        string dir = AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\');
         string[] candidates =
         {
             Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) + @"\Microsoft\Edge\Application\msedge.exe",
@@ -32,6 +37,15 @@ static class Launcher
             return;
         }
 
+        string exe = Assembly.GetExecutingAssembly().Location;
+        string dir = Path.GetDirectoryName(exe);
+        bool portable = File.Exists(Path.Combine(dir, @"extension\manifest.json"));
+        if (!portable)
+        {
+            dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Programs\Gemini");
+            exe = Install(exe, dir);
+        }
+
         // Отдельный профиль: окно всегда отдельный процесс Edge, иначе --load-extension
         // игнорируется, когда обычный Edge уже открыт.
         string args = string.Format(
@@ -39,18 +53,52 @@ static class Launcher
             Path.Combine(dir, "profile"), Path.Combine(dir, "extension"), Url);
         Process.Start(new ProcessStartInfo(edge, args) { UseShellExecute = false, WorkingDirectory = dir });
 
-        // Ярлыки рядом с exe и на рабочем столе: создаются при каждом запуске, если их нет или они ведут не сюда.
-        EnsureShortcut(dir, dir);
-        EnsureShortcut(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), dir);
+        // Ярлыки создаются при каждом запуске, если их нет или они ведут не сюда.
+        if (portable) EnsureShortcut(dir, exe, dir);
+        EnsureShortcut(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), exe, dir);
+        if (!portable) EnsureShortcut(Environment.GetFolderPath(Environment.SpecialFolder.Programs), exe, dir);
     }
 
-    // Кладёт в папку folder ярлык Gemini.lnk на этот exe.
-    // Ярлык хранит полный путь, поэтому создаётся на месте и обновляется, если папку перенесли.
-    static void EnsureShortcut(string folder, string dir)
+    // Копирует exe в папку dir (если запущен не оттуда) и распаковывает вшитое расширение.
+    // Возвращает путь к exe, на который вести ярлыки.
+    static string Install(string exe, string dir)
+    {
+        Directory.CreateDirectory(Path.Combine(dir, "extension"));
+        string target = Path.Combine(dir, "Gemini.exe");
+        if (!string.Equals(exe, target, StringComparison.OrdinalIgnoreCase))
+        {
+            try
+            {
+                File.Copy(exe, target, true);
+                // метка «скачано из интернета» уже проверена при этом запуске, копии она не нужна
+                DeleteFile(target + ":Zone.Identifier");
+            }
+            catch
+            {
+                // установленная копия занята или недоступна: работаем с тем exe, что есть
+                if (!File.Exists(target)) target = exe;
+            }
+        }
+
+        // Расширение перезаписывается при каждом запуске, чтобы после обновления exe оно было новым.
+        Assembly asm = Assembly.GetExecutingAssembly();
+        foreach (string name in asm.GetManifestResourceNames())
+        {
+            if (!name.StartsWith("extension/")) continue;
+            string path = Path.Combine(dir, name.Replace('/', '\\'));
+            using (Stream src = asm.GetManifestResourceStream(name))
+            using (FileStream dst = File.Create(path))
+                src.CopyTo(dst);
+        }
+        return target;
+    }
+
+    // Кладёт в папку folder ярлык Gemini.lnk на exe.
+    // Ярлык хранит полный путь, поэтому создаётся на месте и обновляется, если exe переехал.
+    static void EnsureShortcut(string folder, string exe, string dir)
     {
         try
         {
-            string exe = Assembly.GetExecutingAssembly().Location;
             string path = Path.Combine(folder, "Gemini.lnk");
             Type shellType = Type.GetTypeFromProgID("WScript.Shell");
             object shell = Activator.CreateInstance(shellType);

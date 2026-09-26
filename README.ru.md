@@ -11,7 +11,7 @@
 [![Windows 10 | 11](https://img.shields.io/badge/Windows-10%20%7C%2011-4c8df6?style=flat-square)](#требования)
 [![License: MIT](https://img.shields.io/github/license/ishimuraxxx-ai/gemini-1.0.1?style=flat-square&color=4c8df6)](LICENSE)
 
-<a href="../../releases/latest"><img src="https://img.shields.io/badge/%E2%AC%87%20Скачать%20для%20Windows-4c8df6?style=for-the-badge" alt="Скачать для Windows" height="44"></a>
+<a href="https://github.com/ishimuraxxx-ai/gemini-1.0.1/releases/latest/download/Gemini.exe"><img src="https://img.shields.io/badge/%E2%AC%87%20Скачать%20для%20Windows-4c8df6?style=for-the-badge" alt="Скачать для Windows" height="44"></a>
 
 [English](README.md) · **Русский** · [Сайт](https://ishimuraxxx-ai.github.io/gemini-1.0.1/ru/)
 
@@ -21,9 +21,10 @@
 
 ## Установка
 
-1. Скачайте **`Gemini-portable.zip`** из [Releases](../../releases/latest).
-2. Распакуйте в постоянное место, например `C:\Gemini`.
-3. Запустите **`Gemini.exe`**. Ярлык **Gemini** появится на рабочем столе.
+1. Скачайте **[`Gemini.exe`](https://github.com/ishimuraxxx-ai/gemini-1.0.1/releases/latest/download/Gemini.exe)**: один файл, ничего распаковывать не нужно.
+2. Запустите его. Откроется «Режим ИИ», а ярлык **Gemini** появится на рабочем столе и в меню «Пуск».
+
+Скачанный файл потом можно удалить: программа копирует себя в `%LOCALAPPDATA%\Programs\Gemini`.
 
 Задайте вопрос. Если нужна история чатов, войдите в аккаунт Google.
 
@@ -38,7 +39,7 @@
 | ✂️ **Ничего лишнего** | Нет вкладок «Картинки / Видео / Новости», колонки статей справа и лишних кнопок. Только ответ, по центру. |
 | 🎤 **Голосовой ввод с командами** | Диктовка по **Ctrl+Пробел** на 50+ языках. Скажите в конце **«отправить»**, и вопрос уйдёт. |
 | 🌐 **Язык интерфейса** | Переключается в настройках (**Ctrl+,**), независимо от настроек аккаунта Google. |
-| 📁 **Всё в одной папке** | Программа, настройки и вход в аккаунт лежат в одной папке. Ваш обычный браузер не затрагивается. |
+| 📦 **Один файл** | Скачивается один `Gemini.exe`, без установщика и архивов. Программа, настройки и вход в аккаунт лежат в одной папке; ваш обычный браузер не затрагивается. |
 | 🔍 **Прозрачная сборка** | exe собирает GitHub Actions из этого кода, с контрольными суммами и аттестацией происхождения. |
 
 ## Требования
@@ -49,7 +50,7 @@
 
 ## Что открывает программа
 
-[«Режим ИИ»](https://www.google.com/search?udm=50) — ИИ-чат Google Поиска на базе Gemini. Эта программа — просто эта официальная страница, Microsoft Edge и около 70 строк кода, которые можно прочитать целиком, плюс небольшое расширение, которое убирает со страницы лишнее.
+[«Режим ИИ»](https://www.google.com/search?udm=50) — ИИ-чат Google Поиска на базе Gemini. Эта программа — просто эта официальная страница, Microsoft Edge и около 120 строк кода, которые можно прочитать целиком, плюс небольшое расширение, которое убирает со страницы лишнее.
 
 ## Прозрачность
 
@@ -67,7 +68,7 @@
 
 <br>
 
-`Gemini.exe` запускает Microsoft Edge в режиме приложения со своим профилем и небольшим расширением и держит ярлык `Gemini.lnk` рядом с собой и на рабочем столе:
+`Gemini.exe` запускает Microsoft Edge в режиме приложения со своим профилем и небольшим расширением. Расширение вшито в exe: при запуске скачанный exe копирует себя в `%LOCALAPPDATA%\Programs\Gemini`, распаковывает туда расширение и держит ярлыки Gemini на рабочем столе и в меню «Пуск»:
 
 ```
 msedge.exe --user-data-dir="<папка>\profile"
@@ -81,8 +82,17 @@ msedge.exe --user-data-dir="<папка>\profile"
 Расширение прячет вкладки поиска, колонку источников и лишние кнопки ([`hide.css`](extension/hide.css)), ставит чат по центру, делает заголовок окна коротким и добавляет голосовой ввод ([`voice.js`](extension/voice.js)).
 
 ```
-Gemini/
+%LOCALAPPDATA%\Programs\Gemini\
 ├── Gemini.exe        ← сама программа
+├── extension/        ← чистка страницы, настройки и голосовой ввод (распакованы из exe)
+└── profile/          ← ваш вход в аккаунт Google (создаётся при первом запуске)
+```
+
+Если рядом с `Gemini.exe` есть папка `extension/` (копия этого репозитория), он работает прямо там и ничего не копирует:
+
+```
+Gemini/
+├── Gemini.exe        ← сама программа (собирается build.ps1)
 ├── Gemini.lnk        ← ярлык (такой же Gemini.exe кладёт на рабочий стол)
 ├── extension/        ← чистка страницы, настройки и голосовой ввод (расширение Edge)
 ├── launcher/         ← исходник Gemini.exe
@@ -125,7 +135,7 @@ Gemini/
 
 Пересобрать вручную: `powershell -ExecutionPolicy Bypass -File build.ps1`
 
-**Новый релиз (для автора):** `git tag v1.0.2` и `git push origin v1.0.2`. GitHub Actions соберёт и опубликует `Gemini.exe`, `Gemini-portable.zip` и `SHA256SUMS.txt`.
+**Новый релиз (для автора):** `git tag v1.0.3` и `git push origin v1.0.3`. GitHub Actions соберёт и опубликует `Gemini.exe` и `SHA256SUMS.txt`.
 
 </details>
 
@@ -147,7 +157,9 @@ Gemini/
 
 <br>
 
-Запустите `uninstall.cmd`, чтобы убрать ярлыки, затем удалите папку.
+Закройте Gemini, удалите папку `%LOCALAPPDATA%\Programs\Gemini` (вставьте это в адресную строку Проводника) и ярлыки Gemini на рабочем столе и в меню «Пуск».
+
+Копия репозитория: запустите `uninstall.cmd`, чтобы убрать ярлыки, затем удалите папку.
 
 </details>
 
@@ -162,7 +174,7 @@ Gemini/
 <details>
 <summary><b>Как установить на Windows 10 или 11?</b></summary>
 <br>
-Скачайте <code>Gemini-portable.zip</code> из Releases, распакуйте и запустите <code>Gemini.exe</code>. Ярлык Gemini появится на рабочем столе.
+Скачайте <code>Gemini.exe</code> из Releases (один файл) и запустите. Ярлык Gemini появится на рабочем столе и в меню «Пуск».
 </details>
 
 <details>
