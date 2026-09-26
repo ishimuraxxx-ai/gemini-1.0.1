@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 [assembly: AssemblyTitle("Gemini")]
 [assembly: AssemblyProduct("Gemini Voice Desktop")]
-[assembly: AssemblyVersion("1.0.2.0")]
+[assembly: AssemblyVersion("1.0.3.0")]
 
 static class Launcher
 {

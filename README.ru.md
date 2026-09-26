@@ -135,7 +135,7 @@ Gemini/
 
 Пересобрать вручную: `powershell -ExecutionPolicy Bypass -File build.ps1`
 
-**Новый релиз (для автора):** `git tag v1.0.3` и `git push origin v1.0.3`. GitHub Actions соберёт и опубликует `Gemini.exe` и `SHA256SUMS.txt`.
+**Новый релиз (для автора):** `git tag v1.0.4` и `git push origin v1.0.4`. GitHub Actions соберёт и опубликует `Gemini.exe` и `SHA256SUMS.txt`.
 
 </details>
 

@@ -135,7 +135,7 @@ Speech is recognized by Edge's built-in Web Speech API (a Microsoft cloud servic
 
 Rebuild manually: `powershell -ExecutionPolicy Bypass -File build.ps1`
 
-**New release (for the author):** `git tag v1.0.3` and `git push origin v1.0.3`. GitHub Actions builds and publishes `Gemini.exe` and `SHA256SUMS.txt`.
+**New release (for the author):** `git tag v1.0.4` and `git push origin v1.0.4`. GitHub Actions builds and publishes `Gemini.exe` and `SHA256SUMS.txt`.
 
 </details>
 

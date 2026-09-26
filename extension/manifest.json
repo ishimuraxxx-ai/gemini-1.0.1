@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Gemini Voice",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Язык интерфейса и голосовой ввод на любом языке для «Режима ИИ» Google Поиска",
   "content_scripts": [
     {
