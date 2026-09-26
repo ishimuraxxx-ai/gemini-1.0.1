@@ -50,7 +50,7 @@ Ask anything. Sign in to Google if you want to keep your chat history.
 
 ## What it opens
 
-[Google AI Mode](https://www.google.com/search?udm=50) is the AI chat in Google Search, powered by Gemini. This app is that official page, Microsoft Edge and about 120 lines of code you can read in full, plus a small extension that tidies the page up.
+[Google AI Mode](https://www.google.com/search?udm=50) is the AI chat in Google Search, powered by Gemini. This app is that official page, Microsoft Edge and about 240 lines of code you can read in full, plus a small extension that tidies the page up.
 
 ## Transparency
 
@@ -135,7 +135,7 @@ Speech is recognized by Edge's built-in Web Speech API (a Microsoft cloud servic
 
 Rebuild manually: `powershell -ExecutionPolicy Bypass -File build.ps1`
 
-**New release (for the author):** `git tag v1.0.4` and `git push origin v1.0.4`. GitHub Actions builds and publishes `Gemini.exe` and `SHA256SUMS.txt`.
+**New release (for the author):** `git tag v1.0.5` and `git push origin v1.0.5`. GitHub Actions builds and publishes `Gemini.exe` and `SHA256SUMS.txt`.
 
 </details>
 
