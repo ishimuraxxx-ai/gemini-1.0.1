@@ -19,6 +19,8 @@ Google AI Mode in its own clean window. Open source, for Windows 10 and 11.
 
 </div>
 
+**Looking for a Gemini desktop app for Windows?** Gemini for Windows is a free, open-source app that opens Google AI Mode, the Gemini-powered chat in Google Search, as a real Windows program: its own window, taskbar icon and Desktop shortcut, with voice input in 55 languages.
+
 ## Install
 
 1. Download **[`Gemini.exe`](https://github.com/ishimuraxxx-ai/gemini-for-windows/releases/latest/download/Gemini.exe)**: one file, nothing to unzip.

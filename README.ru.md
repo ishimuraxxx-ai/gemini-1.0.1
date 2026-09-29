@@ -19,6 +19,8 @@
 
 </div>
 
+**Ищете приложение Gemini для Windows?** Gemini для Windows — бесплатная программа с открытым кодом, которая открывает «Режим ИИ» Google (чат на Gemini в Google Поиске) как обычную программу Windows: своё окно, значок на панели задач и ярлык на рабочем столе, голосовой ввод на 55 языках.
+
 ## Установка
 
 1. Скачайте **[`Gemini.exe`](https://github.com/ishimuraxxx-ai/gemini-for-windows/releases/latest/download/Gemini.exe)**: один файл, ничего распаковывать не нужно.
