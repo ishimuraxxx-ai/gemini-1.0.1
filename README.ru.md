@@ -6,14 +6,14 @@
 
 «Режим ИИ» Google в отдельном чистом окне. Открытый код, для Windows 10 и 11.
 
-[![Latest release](https://img.shields.io/github/v/release/ishimuraxxx-ai/gemini-desktop?style=flat-square&color=4c8df6&label=release)](../../releases/latest)
-[![Downloads](https://img.shields.io/github/downloads/ishimuraxxx-ai/gemini-desktop/total?style=flat-square&color=4c8df6)](../../releases)
+[![Latest release](https://img.shields.io/github/v/release/ishimuraxxx-ai/gemini-for-windows?style=flat-square&color=4c8df6&label=release)](../../releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/ishimuraxxx-ai/gemini-for-windows/total?style=flat-square&color=4c8df6)](../../releases)
 [![Windows 10 | 11](https://img.shields.io/badge/Windows-10%20%7C%2011-4c8df6?style=flat-square)](#требования)
-[![License: MIT](https://img.shields.io/github/license/ishimuraxxx-ai/gemini-desktop?style=flat-square&color=4c8df6)](LICENSE)
+[![License: MIT](https://img.shields.io/github/license/ishimuraxxx-ai/gemini-for-windows?style=flat-square&color=4c8df6)](LICENSE)
 
-<a href="https://github.com/ishimuraxxx-ai/gemini-desktop/releases/latest/download/Gemini.exe"><img src="https://img.shields.io/badge/%E2%AC%87%20Скачать%20для%20Windows-4c8df6?style=for-the-badge" alt="Скачать для Windows" height="44"></a>
+<a href="https://github.com/ishimuraxxx-ai/gemini-for-windows/releases/latest/download/Gemini.exe"><img src="https://img.shields.io/badge/%E2%AC%87%20Скачать%20для%20Windows-4c8df6?style=for-the-badge" alt="Скачать для Windows" height="44"></a>
 
-[English](README.md) · **Русский** · [Сайт](https://ishimuraxxx-ai.github.io/gemini-desktop/ru/)
+[English](README.md) · **Русский** · [Сайт](https://ishimuraxxx-ai.github.io/gemini-for-windows/ru/)
 
 <img src="docs/screenshot-ru.png" alt="Gemini для Windows: ответ «Режима ИИ» Google в чистом тёмном окне, чат по центру" width="860">
 
@@ -21,7 +21,7 @@
 
 ## Установка
 
-1. Скачайте **[`Gemini.exe`](https://github.com/ishimuraxxx-ai/gemini-desktop/releases/latest/download/Gemini.exe)**: один файл, ничего распаковывать не нужно.
+1. Скачайте **[`Gemini.exe`](https://github.com/ishimuraxxx-ai/gemini-for-windows/releases/latest/download/Gemini.exe)**: один файл, ничего распаковывать не нужно.
 2. Запустите его. Откроется «Режим ИИ», а ярлык **Gemini** появится на рабочем столе и в меню «Пуск».
 
 Скачанный файл потом можно удалить: программа копирует себя в `%LOCALAPPDATA%\Programs\Gemini`.
@@ -58,7 +58,7 @@
 - **exe собирает GitHub, а не автор.** Релизы делает [`.github/workflows/release.yml`](.github/workflows/release.yml), лог каждой сборки открыт во вкладке [Actions](../../actions).
 - **Проверить происхождение** вашего `Gemini.exe`:
   ```
-  gh attestation verify Gemini.exe -R ishimuraxxx-ai/gemini-desktop
+  gh attestation verify Gemini.exe -R ishimuraxxx-ai/gemini-for-windows
   ```
 - **Контрольные суммы.** В каждом релизе есть `SHA256SUMS.txt`. Сравнить: `Get-FileHash Gemini.exe -Algorithm SHA256`.
 - **Никакой телеметрии.** Программа обращается только к Google.

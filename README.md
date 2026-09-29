@@ -6,14 +6,14 @@
 
 Google AI Mode in its own clean window. Open source, for Windows 10 and 11.
 
-[![Latest release](https://img.shields.io/github/v/release/ishimuraxxx-ai/gemini-desktop?style=flat-square&color=4c8df6&label=release)](../../releases/latest)
-[![Downloads](https://img.shields.io/github/downloads/ishimuraxxx-ai/gemini-desktop/total?style=flat-square&color=4c8df6)](../../releases)
+[![Latest release](https://img.shields.io/github/v/release/ishimuraxxx-ai/gemini-for-windows?style=flat-square&color=4c8df6&label=release)](../../releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/ishimuraxxx-ai/gemini-for-windows/total?style=flat-square&color=4c8df6)](../../releases)
 [![Windows 10 | 11](https://img.shields.io/badge/Windows-10%20%7C%2011-4c8df6?style=flat-square)](#requirements)
-[![License: MIT](https://img.shields.io/github/license/ishimuraxxx-ai/gemini-desktop?style=flat-square&color=4c8df6)](LICENSE)
+[![License: MIT](https://img.shields.io/github/license/ishimuraxxx-ai/gemini-for-windows?style=flat-square&color=4c8df6)](LICENSE)
 
-<a href="https://github.com/ishimuraxxx-ai/gemini-desktop/releases/latest/download/Gemini.exe"><img src="https://img.shields.io/badge/%E2%AC%87%20Download%20for%20Windows-4c8df6?style=for-the-badge" alt="Download for Windows" height="44"></a>
+<a href="https://github.com/ishimuraxxx-ai/gemini-for-windows/releases/latest/download/Gemini.exe"><img src="https://img.shields.io/badge/%E2%AC%87%20Download%20for%20Windows-4c8df6?style=for-the-badge" alt="Download for Windows" height="44"></a>
 
-**English** · [Русский](README.ru.md) · [Website](https://ishimuraxxx-ai.github.io/gemini-desktop/)
+**English** · [Русский](README.ru.md) · [Website](https://ishimuraxxx-ai.github.io/gemini-for-windows/)
 
 <img src="docs/screenshot-en.png" alt="Gemini for Windows: a Google AI Mode answer in a clean dark window with a centered chat" width="860">
 
@@ -21,7 +21,7 @@ Google AI Mode in its own clean window. Open source, for Windows 10 and 11.
 
 ## Install
 
-1. Download **[`Gemini.exe`](https://github.com/ishimuraxxx-ai/gemini-desktop/releases/latest/download/Gemini.exe)**: one file, nothing to unzip.
+1. Download **[`Gemini.exe`](https://github.com/ishimuraxxx-ai/gemini-for-windows/releases/latest/download/Gemini.exe)**: one file, nothing to unzip.
 2. Run it. AI Mode opens, and a **Gemini** shortcut appears on your Desktop and in the Start menu.
 
 The downloaded file can be deleted afterwards: the app copies itself to `%LOCALAPPDATA%\Programs\Gemini`.
@@ -58,7 +58,7 @@ Ask anything. Sign in to Google if you want to keep your chat history.
 - **GitHub builds the exe, not the author.** Releases come from [`.github/workflows/release.yml`](.github/workflows/release.yml), and every build log is public in the [Actions](../../actions) tab.
 - **Verify the origin** of your `Gemini.exe`:
   ```
-  gh attestation verify Gemini.exe -R ishimuraxxx-ai/gemini-desktop
+  gh attestation verify Gemini.exe -R ishimuraxxx-ai/gemini-for-windows
   ```
 - **Checksums.** Every release has `SHA256SUMS.txt`. Compare with: `Get-FileHash Gemini.exe -Algorithm SHA256`.
 - **No telemetry.** The app talks only to Google.
