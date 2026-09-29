@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Gemini для Windows: «Режим ИИ» Google как программа для Windows 10/11 (бесплатно, открытый код)</title>
-  <meta name="description" content="Бесплатная программа с открытым кодом для Windows 10 и 11: «Режим ИИ» Google (Gemini) в отдельном чистом окне с ярлыком на рабочем столе, без вкладок поиска и колонки источников, чат по центру и голосовой ввод с командами. Неофициальная.">
+  <meta name="description" content="Бесплатная программа с открытым кодом для Windows 10 и 11: «Режим ИИ» Google (Gemini) в отдельном чистом окне с ярлыком на рабочем столе, без вкладок поиска и колонки источников, чат по центру и голосовой ввод с командами. Неофициальная, не путать с официальным приложением Gemini.">
   <link rel="canonical" href="https://ishimuraxxx-ai.github.io/gemini-for-windows/ru/">
   <link rel="alternate" hreflang="en" href="https://ishimuraxxx-ai.github.io/gemini-for-windows/">
   <link rel="alternate" hreflang="ru" href="https://ishimuraxxx-ai.github.io/gemini-for-windows/ru/">
@@ -49,7 +49,9 @@
       { "@type": "Question", "name": "Это безопасно?",
         "acceptedAnswer": { "@type": "Answer", "text": "Весь код открыт. Gemini.exe собирается публично на GitHub Actions с контрольными суммами SHA-256 и аттестацией происхождения. Программа не собирает данные." } },
       { "@type": "Question", "name": "Это официальная программа?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Нет. Это неофициальный проект с открытым кодом, не связанный с Google." } }
+        "acceptedAnswer": { "@type": "Answer", "text": "Нет. Это неофициальный проект с открытым кодом, не связанный с Google. Официальное приложение Gemini для Windows — на gemini.google/desktop." } },
+      { "@type": "Question", "name": "Чем это отличается от официального приложения Gemini для Windows?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Официальное приложение Gemini для Windows от Google (gemini.google/desktop, вышло в сентябре 2026 года) — это полный ассистент Gemini: открывается поверх окон по Alt+Пробел, умеет работать с приложениями Google, создавать изображения и видео, выполнять задачи как агент. Gemini для Windows — неофициальная программа размером около 45 КБ, которая открывает другое: \u00abРежим ИИ\u00bb Google, ИИ-чат Google Поиска с ответами по материалам из интернета, и работает без входа в аккаунт. Плюс голосовой ввод с командами на 55 языках. Если нужен полный ассистент Gemini, ставьте официальное приложение." } }
     ]
   }
   </script>
@@ -72,6 +74,7 @@
       <section class="hero">
         <h1>Gemini для <span>Windows</span><sup>*</sup></h1>
         <p class="lead">«Режим ИИ» Google в отдельном чистом окне. Открытый код, для Windows 10 и 11.</p>
+        <p class="note">Это не официальное приложение Gemini: оно на <a href="https://gemini.google/desktop/">gemini.google/desktop</a>. Здесь — маленький неофициальный клиент «Режима ИИ» Google, работает без входа в аккаунт. <a href="#faq">Чем они отличаются</a></p>
         <div class="cta">
           <a class="btn primary" href="https://github.com/ishimuraxxx-ai/gemini-for-windows/releases/latest/download/Gemini.exe">Скачать для Windows</a>
           <a class="btn" href="https://github.com/ishimuraxxx-ai/gemini-for-windows">Исходный код</a>
@@ -120,6 +123,8 @@
 
       <section id="faq">
         <h2>Частые вопросы</h2>
+        <details><summary>Чем это отличается от официального приложения Gemini для Windows?</summary>
+          <p>Официальное приложение Gemini для Windows от Google (gemini.google/desktop, вышло в сентябре 2026 года) — это полный ассистент Gemini: открывается поверх окон по Alt+Пробел, умеет работать с приложениями Google, создавать изображения и видео, выполнять задачи как агент. Gemini для Windows — неофициальная программа размером около 45 КБ, которая открывает другое: «Режим ИИ» Google, ИИ-чат Google Поиска с ответами по материалам из интернета, и работает без входа в аккаунт. Плюс голосовой ввод с командами на 55 языках. Если нужен полный ассистент Gemini, ставьте официальное приложение.</p></details>
         <details><summary>Что именно открывает программа?</summary>
           <p>«Режим ИИ» Google (<code>google.com/search?udm=50</code>), ИИ-чат Google Поиска на базе Gemini. Программа показывает его в своём окне и прячет всё, кроме чата.</p></details>
         <details><summary>Нужен ли аккаунт Google?</summary>

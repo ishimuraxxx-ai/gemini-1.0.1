@@ -19,7 +19,10 @@ Google AI Mode in its own clean window. Open source, for Windows 10 and 11.
 
 </div>
 
-**Looking for a Gemini desktop app for Windows?** Gemini for Windows is a free, open-source app that opens Google AI Mode, the Gemini-powered chat in Google Search, as a real Windows program: its own window, taskbar icon and Desktop shortcut, with voice input in 55 languages.
+**Looking for Google AI Mode as a desktop app?** Gemini for Windows is a free, open-source app that opens Google AI Mode, the Gemini-powered chat in Google Search, as a real Windows program: its own window, taskbar icon and Desktop shortcut, with voice input in 55 languages.
+
+> [!NOTE]
+> **Not the official Gemini app.** Google's own Gemini app for Windows is at [gemini.google/desktop](https://gemini.google/desktop/). This is a tiny unofficial app for Google AI Mode that works without signing in. [How they differ](#faq).
 
 ## Install
 
@@ -166,6 +169,12 @@ A copy of the repository: run `uninstall.cmd` to remove the shortcuts, then dele
 </details>
 
 ## FAQ
+
+<details>
+<summary><b>How is this different from the official Gemini app for Windows?</b></summary>
+<br>
+Google's official Gemini app for Windows (gemini.google/desktop, released in September 2026) is the full Gemini assistant: it opens over other windows with Alt+Space and adds Google apps integration, image and video generation and agent features. Gemini for Windows is an unofficial ~45 KB app that opens something else: Google AI Mode, the AI chat in Google Search that answers from the web, and it works without signing in. It adds voice input with commands in 55 languages. If you want the full Gemini assistant, use the official app.
+</details>
 
 <details>
 <summary><b>What exactly does it open?</b></summary>
